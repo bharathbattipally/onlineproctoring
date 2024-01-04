@@ -1,0 +1,140 @@
+<html>
+<head>
+    <title>
+        teacher preview
+    </title>
+    <script src="https://kit.fontawesome.com/8a959afd55.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            
+        }
+        .header{
+            font-family: Poppins;
+        }
+        nav ul li a{
+            text-decoration: none;
+            color:black;
+            background-color: white;
+            padding: 3px 5px;
+            letter-spacing: 1px;
+            border-radius: 7px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        button{
+            background: rgb(37, 150, 190);
+            border-radius: 5px;
+            padding: 2px 4px;
+
+        }
+        .header{
+            font-size: 30px;
+            color: white;
+        }
+        nav ul li{
+            margin: 0 15px;
+        }
+        nav{
+            height:65px;
+            background-color:rgba(0, 0, 0, 0.8);
+            display: flex; 
+            align-items: center;
+            justify-content: space-between;
+            padding: 0px 50px 0px 100px;
+        }
+        nav ul{
+            display: flex;
+            list-style: none;
+            
+        }
+        nav ul li a:hover{
+            text-decoration: none;
+            color:white;
+            background: #80ccff;
+            padding: 3px 5px;
+            letter-spacing: 1px;
+            border-radius: 7px;
+            font-weight: 400;
+        }
+        .qanda{
+                    margin-left: 50px;
+                    margin-right:50px;
+                    font-family: sans-serif;
+                    font-size: 20px;
+        }
+        .marks{
+            float: right;
+        }
+        h2{
+            color: #0083DB;
+            text-align: center;
+            font-size: 30px;
+            margin: 30px 0;
+        }
+        h3{
+            margin-left: 20px;
+            margin-bottom: 30px;
+        }
+        .questions{
+            width: 95%;
+            padding:20px;
+            background-color:#e6f3ff;
+        }
+
+        #correct{
+            width: 95%;
+            padding: 20px;
+            background-color:#f4f4f4;
+        }
+        #submit{
+            text-decoration: none;
+            margin: 60px;
+            text-align: center;
+            float: right;
+            font-size: 18px;
+            font-weight: 700;
+            padding: 5px 20px; 
+            background-color:#0083DB;
+            border: none;
+            color: white;
+        }
+        #submit:hover{
+            cursor: pointer;
+            background-color: transparent;
+            border: 1.5px solid #0083DB;
+            color: black;
+        }
+            </style>
+    </head>
+<body>
+    <div class='Header'>
+			<nav> <div class="header"><h4>Exams Point</h4></div>
+				<ul>
+				<li><a href="addquesns.html">Add Questions</a></li>
+				</ul>
+			</nav>    
+    </div>
+    <h2>Questions Preview</h2>
+    <h3>Test ID:<%= testdata._id%></h3>
+    <div class="qanda">
+        <%if (questionslist.length > 0) { %>
+            <% questionslist.forEach(function(object,index) {%>
+                    <div class="questions">
+                            <div class="quesn"><b><%= index+1 %></b>) &nbsp;<%= object.question %> <strong><span class="marks" style="color: red;"><%= object.quesnmarks %> marks</span></strong></div><br><br>
+                            <hr><br> 
+                        option A : <%= object.optionA %><br>
+                        option B : <%= object.optionB %><br>
+                        option C : <%= object.optionC %><br>
+                        option D : <%= object.optionD %><br>
+                        <i style="float:right;" class="fa fa-trash" aria-hidden="true" ></i><br></a>
+                    </div><br>
+                    <div id="correct"> Correct Answer : <%= object.correctopt %></div><br><br>
+                <%})%>
+            <% } %>         
+            </div>
+        <a href="/teacherdash" id="submit">Submit</a>
+    </body>
+</html>

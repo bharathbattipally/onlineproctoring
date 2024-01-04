@@ -1,0 +1,267 @@
+<html>
+<head>
+    <title>
+        Coding
+    </title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        .navigation{
+            height: 9%;
+            width: 100%;
+            background-color:black;
+            color: white;
+            display: flex; 
+            position: fixed;
+            z-index: 1000;
+        }
+        .header h1{
+            margin-left: 20px;
+            margin-top: 6%;
+            font-size: 25px;    
+        }
+        #timer{
+            background-color:cadetblue;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            width: 8%;
+            text-align: center;
+            margin-left: 67%;
+            font-size: 20px;
+        }
+        .header{
+            display: flex;
+            color: white;
+            padding: 5px;
+        }
+        .proct #video{
+            width: 20%;
+            height: 30%;    
+            border: 3px solid black;
+            float: left;
+            margin-top: 7%;
+            margin-left: 10px;
+            position: fixed;
+        }
+        .qanda{
+            position: relative;
+            margin-left: 28%;;
+            width: 70%;
+            padding-top: 8%;  
+        }
+        #clear{
+            padding: 0.5% 0.7%;
+            margin-left: 3%;
+            margin-top: 1%;
+            background-color:#4d94ff;
+            border-color: #4d94ff;
+            color: white;
+        }
+        .questions{
+            min-height: 20%;
+            max-height: 70%;
+            border: 3px solid black;
+            overflow:auto;
+            padding: 1% 1%;
+            width: 96%;
+            font-size: 21px;
+        }
+        .options{
+            border: 3px solid black;
+            margin-top: 2%;
+            min-height: 10%;
+            max-height: 60%;
+            padding: 1% 1%;
+            width: 96%;
+            font-size: 21px;
+        }
+        .opt1,.opt2,.opt3,.opt4{
+            padding: 2% 3%;   
+        }
+        #clear{
+            padding: 0.5% 0.7%;
+            margin-left: 3%;
+            margin-top: 1%;
+            background-color:#4d94ff;
+            border-color: #4d94ff;
+            color: white;
+        }
+        #clear:hover{
+            background-color: #99bbff;
+            cursor:pointer;
+        }
+        #submit{
+            margin: 3%;
+            float: right;
+            background-color: #04AA6D;
+            text-decoration: none;
+            padding: 7px 3%;
+            color: white;
+            font-size: 25px;
+            position: relative;
+        }
+        #submit:hover{
+            border: 2px solid #04AA6D;
+            color: black;
+            background-color: white;
+        }
+    </style>
+</head>
+    <body onload="starttimer('<%=time.duration%>')" onbeforeunload="document.getElementById('submit').click()">
+        <div class="navigation">
+            <div class="header">
+                <h1>EXAMSPOINT</h1>
+            </div>
+            <div id="timer"></div>
+        </div>
+        <div class="proct">
+            <video id="video" autoplay muted></video>
+        </div>
+        
+        <div class="overall">
+            <% questionslist.forEach(function(quesn,index) {%>   
+            <div class="qanda">
+                    <div class="questions">
+                        <b><%= index+1%></b>.&nbsp;<%= quesn.question %>
+                        <div style="float: right;"><%=quesn.quesnmarks %> marks</div>
+                    </div>    
+
+                    <form name="questionform" >
+                        <div class="options">
+                        <div class="opt1">
+                                <input type="radio" name="option" id="option1" value="<%= quesn.optionA %>" >&nbsp;&nbsp;&nbsp;
+                                <label for="option1"><%= quesn.optionA %></label><br>
+                        </div>
+                        <div class="opt2">
+                                <input type="radio" name="option" id="option2" value="<%= quesn.optionB %>" >&nbsp;&nbsp;&nbsp;
+                                <label for="option2"><%= quesn.optionB %></label><br>
+                        </div >
+                        <div class="opt3">
+                                <input type="radio" name="option" id="option3" value="<%= quesn.optionC %>" >&nbsp;&nbsp;&nbsp;
+                                <label for="option3"><%= quesn.optionC %></label><br>
+                        </div>
+                        <div class="opt4">
+                                <input type="radio" name="option" id="option4" value="<%= quesn.optionD %>">&nbsp;&nbsp;&nbsp;
+                                <label for="option4"><%= quesn.optionD %></label><br>
+                        </div>
+                        <div>
+                                <input type="reset" name="clear" value="Clear Choices" id="clear"> 
+                        </div>
+                        </div>     
+                    </form>
+                </div> 
+            <% }) %>
+            </div>
+            <div  class="submitbtn">
+                <a href="/dashboard" onclick="submittest()" id="submit">submit</a>
+            </div>
+        <script type="text/javascript"  src="../face-api.min.js"></script>
+        <script>
+            var video = document.querySelector("#video");
+            var tab_change=0
+            var fullscreen=1
+            var det_len=0
+            var cheat=0
+            document.addEventListener("visibilitychange", event => {
+            if (document.visibilityState == "visible") {
+                alert("If you change tabs another "+(5-tab_change)+" times.. Test will be closed",3000);
+            } 
+            else {
+                tab_change=tab_change+1;
+                alert("tab is inactive",3000);
+            }
+
+            })
+            Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('../models'),
+            faceapi.nets.faceLandmark68Net.loadFromUri('../models'),
+            faceapi.nets.faceRecognitionNet.loadFromUri('../models'),
+            faceapi.nets.faceExpressionNet.loadFromUri('../models')
+            ]).then(startVideo())
+        
+            function startVideo() {
+            if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                video.srcObject = stream;
+                })
+                .catch(function (error) {
+                console.log("Something went wrong!");
+                });
+            }
+            }
+    
+            video.addEventListener('play', () => {
+            
+            const canvas = faceapi.createCanvasFromMedia(video)
+            document.body.append(canvas)
+            const displaySize = { width: video.width, height: video.height }
+            faceapi.matchDimensions(canvas, displaySize)
+            setInterval(async () => {
+
+                const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+                const resizedDetections = faceapi.resizeResults(detections, displaySize)
+                det_len=det_len+detections.length
+
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+                
+            }, 500)
+            setInterval(async ()=>{
+
+                
+                if(det_len<10){
+                alert("Make sure that your face is visible",5000)
+                cheat=cheat+1
+
+                }
+                if(det_len>25){
+                alert("Make sure that no one is around you",6000)
+                cheat=cheat+1
+                }
+                if(cheat>10||tab_change>=3){
+                document.getElementById('submit').click();
+                }
+                
+                det_len=0
+            },10000)
+           
+
+            })
+            function starttimer(duration){
+                var timer=duration*60;
+                setInterval(function () {
+                    hours = parseInt(timer/(60*24),10)
+                    minutes = parseInt(timer / 60, 10);
+                    seconds = parseInt(timer % 60, 10);
+
+                    hours= hours < 10?  "0"+hours:hours;
+                    minutes = minutes < 10 ? "0" + minutes : minutes;
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                    document.getElementById('timer').innerHTML = hours+":"+minutes + ":" + seconds;
+                    timer-=1
+                    if (timer < 0) {
+                        document.getElementById('submit').click()
+                    }
+                }, 1000);
+            }
+            function submittest(){
+                let arr = [];
+                let text=""
+                document.querySelectorAll('form').forEach(function (form, index) {
+                    for(i=0;i<form.length-1;i++){
+                        if(form[i].checked){
+                            arr[index]=form[i].value;
+                        }
+                    }
+                }); 
+            }
+    </script>
+</body>
+</html>
+
+

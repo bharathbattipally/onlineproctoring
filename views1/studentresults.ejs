@@ -1,0 +1,37 @@
+<html>
+    <head>
+    <title>
+        Studentresults
+        </title>
+        <link rel="stylesheet" href="studentresults.css" type="text/css">
+    </head>
+    <body>
+        <div class="header">
+            <img src="logomain.png" alt="logo">
+        </div>
+        
+        <div class="some">
+            
+            <img src="Some.png" alt="some">
+        </div>
+        <table>
+            <tr>
+            <th>Test Id</th>
+            <th>Subject</th>
+            <th>Topic</th>
+            <th>Marks</th>
+            </tr>
+            <tr>
+            
+            <td><%=data._id%></td>
+            <td><%=data.subject%></td>
+            <td><%=data.topic%></td>
+            <% let marks= 0; %>
+            <% details.forEach(function(question){%>
+                <% marks=marks+question.quesnmarks%>
+            <%})%>
+                <td><%=marks%></td>
+            </tr>
+            </table></div>
+    </body>
+</html>

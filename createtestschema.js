@@ -1,0 +1,29 @@
+const mongoose=require("mongoose")
+const devcreatetest=new mongoose.Schema({
+subject:{
+    type:String,
+    required:true
+},
+topic:{
+    type:String,
+    required:true
+},
+startdate:{
+    type:Date,
+    required:true
+},
+enddate:{
+    type:Date,
+    required:true
+},
+duration:{
+    type:Number,
+    required:true
+},
+password:{
+    type:String,
+    required:true
+},
+questions:[]
+})
+module.exports=mongoose.model("devcreatetest",devcreatetest)

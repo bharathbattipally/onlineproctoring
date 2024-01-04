@@ -1,0 +1,40 @@
+<html>
+    <head>
+<title>
+    ExamsPoint</title>
+        <link rel="stylesheet" type="text/css" href="addquesns.css">
+    </head>
+<body>
+	<div class='Header'>
+			<nav> <div class="header"><h4>Exams Point</h4></div>
+				<ul>
+				<li><a href="/preview">View Questions</a></li>
+				</ul>
+			</nav>    
+		</div>
+    <div class="main">
+		<div class="create">
+			<h2>ADD QUESTIONS</h2>
+			<form class="form" method="post" action="/addquestions">
+				<label for="question">Question :</label><br><br>
+				<input  style="height: 30vh"type="text" id="question" name="question" required><br><br>
+				<div class="options">
+					<label for="optionA">Option A</label><br><br>
+					<input type="text" id="optionA" name="optionA" required><br><br>
+					<label for="optionB">Option B</label><br><br>
+					<input type="text" id="optionB" name="optionB" required><br><br>
+					<label for="optionC">Option C</label><br><br>
+					<input type="text" id="optionC" name="optionC" required><br><br>
+					<label for="optionD">Option D</label><br><br>
+					<input type="text" id="optionD" name="optionD" required><br><br>
+				</div>
+				<label for="correct">Correct</label><br><br>
+				<input type="text" id="correct" name="correctopt" required><br><br>
+				<label for="marks">marks</label><br><br>
+				<input type="number" step="0.01" id="marks" name="marks" required>
+				<br><br>
+				<input type="submit" id="submit" name="submit" value="Addquestion">
+			</form>
+		</div>
+    </div>
+    </body></html>

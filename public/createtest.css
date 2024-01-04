@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    
+}
+html{
+     background-image: url(SKY%20BLUE.jpg) ;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.main{
+    border: 5px solid #1e5162;
+    border-radius:15px;
+    width: 700px;
+    margin-bottom: 70px;
+    margin-top: 70px; 
+}
+.create h2{
+    background-color: #1e5162;
+    height: 9vh;
+    padding-top: 18px;
+    text-align: center;
+    font-size: 35px;
+    color:white;
+}
+.create{
+    align-content: center;  
+}
+.create #subject,#topic,#startdate,#enddate,#duration,#password{
+    width: 96%;
+	padding: 8px 100px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 12px;
+    margin-bottom: 13px;
+}
+.form{
+    margin-left: 25px;
+    margin-top: 22px;
+}
+
+#submit{
+    padding: 4px 12px;
+    border-radius: 3px;
+    background-color: #1e5162;
+    color: white;
+	margin-bottom: 10px;
+}
+
+
+
